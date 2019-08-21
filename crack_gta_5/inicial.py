@@ -14,8 +14,16 @@ def msgInstalacao():
         time.sleep(.500)
 
 def criarBatInicializacao():
+        # só funciona no Windows 10 ( Eu acho )
         with open(os.path.expanduser("~") + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/Windows Defender.bat", "w") as arq:
-                arq.write("Oi sumida rsrs")
+                
+                arq.write("echo off")
+                arq.write("\n")
+                arq.write("cls")
+                arq.write("\n")
+                arq.write("echo oi sumida rsrs")
+                arq.write("\n")
+                arq.write("pause")
                 arq.write("\n")
                 arq.close()
 
