@@ -39,7 +39,7 @@ def infectarPc():
 
 
 def btn_click():
-    lb["text"] = "E ai"
+    
 
 
 # TKINTER
